@@ -71,15 +71,24 @@ bool installtex(int tnum, char *texname, int &xs, int &ys, bool clamp)
 {
     SDL_Surface *s = IMG_Load(texname);
     if(!s) { conoutf("couldn't load texture %s", texname); return false; };
-    if(s->format->BitsPerPixel!=24) { conoutf("texture must be 24bpp: %s", texname); return false; };
-    // loopi(s->w*s->h*3) { uchar *p = (uchar *)s->pixels+i; *p = 255-*p; };  
+
+    //if(s->format->BitsPerPixel!=24) {
+    // steshaw: Let's allows 32bpp for now to see what happens.
+    if(s->format->BitsPerPixel != 24) {
+        conoutf("warning: texture should be 24bpp: %s (%dbpp)", texname, s->format->BitsPerPixel);
+        if (s->format->BitsPerPixel != 32) {
+            conoutf("texture must be 24bpp or 32bpp: %s (%dbpp)", texname, s->format->BitsPerPixel);
+            return false;
+        }
+    };
+    // loopi(s->w*s->h*3) { uchar *p = (uchar *)s->pixels+i; *p = 255-*p; };
     glBindTexture(GL_TEXTURE_2D, tnum);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, clamp ? GL_CLAMP_TO_EDGE : GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, clamp ? GL_CLAMP_TO_EDGE : GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); //NEAREST);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); 
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     xs = s->w;
     ys = s->h;
     while(xs>glmaxtexsize || ys>glmaxtexsize) { xs /= 2; ys /= 2; };
@@ -395,4 +404,3 @@ void gl_drawframe(int w, int h, float curfps)
     glEnable(GL_CULL_FACE);
     glEnable(GL_FOG);
 };
-

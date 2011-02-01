@@ -1,8 +1,9 @@
 CXX=g++
+CXX=g++ -fpermissive   # XXX: Remove
 CXXOPTFLAGS=-Wall -O3 -fsigned-char -fomit-frame-pointer
 CXXFLAGS=$(CXXOPTFLAGS) -I../enet/include `sdl-config --cflags`
 
-CLIENT_LIBS=-L../enet -lenet `sdl-config --libs` -lSDL_image -lSDL_mixer -lz -lGL -lGLU 
+CLIENT_LIBS=-L../enet -lenet `sdl-config --libs` -framework OpenGL -lz -L/Developer/SDKs/MacOSX10.5.sdk/usr/X11/lib/ -lX11 #-lSDL_image -lSDL_mixer -lz -lGL -lGLU 
 CLIENT_OBJS= \
 	client.o \
 	clientextras.o \
@@ -37,7 +38,7 @@ CLIENT_OBJS= \
 	worldocull.o \
 	worldrender.o
 
-SERVER_LIBS=-L../enet -lenet
+SERVER_LIBS=-L../enet -lenet `sdl-config --libs`
 SERVER_OBJS= \
 	standalone.o \
 	serverms.o \
@@ -62,5 +63,4 @@ client: $(CLIENT_OBJS)
 	$(CXX) $(CXXFLAGS) -o cube_client $(CLIENT_OBJS) $(CLIENT_LIBS)
 
 server: $(SERVER_OBJS)
-	$(CXX) $(CXXFLAGS) -o cube_server $(SERVER_OBJS) $(SERVER_LIBS)  
-	
+	$(CXX) $(CXXFLAGS) -o cube_server $(SERVER_OBJS) $(SERVER_LIBS)
