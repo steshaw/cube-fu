@@ -1,3 +1,4 @@
 #!/bin/bash
 
-cd src && make
+# Puts the local sdl-config script into the PATH.
+cd src && PATH=..:$PATH make

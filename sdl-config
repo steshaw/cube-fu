@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [[ $1 == "--cflags" ]]; then
+  echo "-I /usr/X11/include"
+  echo "-I /Library/Frameworks/SDL.framework/Headers/"
+  echo "-I /Library/Frameworks/SDL_image.framework/Headers/"
+  echo "-I /Library/Frameworks/SDL_mixer.framework/Headers/"
+
+elif [[ $1 == "--libs" ]]; then
+  echo "-framework Cocoa"
+  echo "-framework SDL"
+  echo "-framework SDL_image"
+  echo "-framework SDL_mixer"
+  echo "-I /Library/Frameworks/SDL.framework/Headers/"
+  echo "/Users/steshaw/.shelly/local/SDL-extras/SDLMain/NIBless/SDLMain.m"
+
+else
+  echo "unknown option" >&2
+  exit 1
+
+fi
+
+exit 0
