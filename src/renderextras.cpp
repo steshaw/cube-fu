@@ -201,7 +201,7 @@ void readmatrices()
 
 float depthcorrect(float d)
 {
-	return (d<=1/256.0f) ? d*256 : d;
+    return (d<=1/256.0f) ? d*256 : d;
 };
 
 // find out the 3d target of the crosshair in the world easily and very acurately.

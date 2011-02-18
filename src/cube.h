@@ -1,6 +1,6 @@
 // one big bad include file for the whole engine... nasty!
 
-#include "tools.h"			
+#include "tools.h"
 
 enum                            // block types, order matters!
 {
@@ -257,15 +257,15 @@ enum    // function signatures for script functions, see command.cpp
 #define VARF(name, min, cur, max, body)  void var_##name(); static int name = variable(#name, min, cur, max, &name, var_##name, false); void var_##name() { body; }
 #define VARFP(name, min, cur, max, body) void var_##name(); static int name = variable(#name, min, cur, max, &name, var_##name, true); void var_##name() { body; }
 
-#define ATOI(s) strtol(s, NULL, 0)		// supports hexadecimal numbers
+#define ATOI(s) strtol(s, NULL, 0)  // supports hexadecimal numbers
 
 #ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include "windows.h"
-	#define _WINDOWS
-	#define ZLIB_DLL
+    #define WIN32_LEAN_AND_MEAN
+    #include "windows.h"
+    #define _WINDOWS
+    #define ZLIB_DLL
 #else
-	#include <dlfcn.h>
+    #include <dlfcn.h>
 #endif
 
 #include <time.h>

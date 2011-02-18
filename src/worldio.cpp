@@ -243,8 +243,8 @@ void load_world(char *mname)        // still supports all map formats that have 
     };
     free(world);
     setupworld(hdr.sfactor);
-	char texuse[256];
-	loopi(256) texuse[i] = 0;
+    char texuse[256];
+    loopi(256) texuse[i] = 0;
     sqr *t = NULL;
     loopk(cubicsize)
     {

@@ -164,7 +164,7 @@ void record(char *name)
     conoutf("started recording demo to %s", fn);
     demorecording = true;
     starttime = lastmillis;
-	ddamage = bdamage = 0;
+    ddamage = bdamage = 0;
 };
 
 void demodamage(int damage, vec &o) { ddamage = damage; dorig = o; };
@@ -188,10 +188,10 @@ void incomingdemodata(uchar *buf, int len, bool extras)
         gzput(player1->armourtype);
         loopi(NUMGUNS) gzput(player1->ammo[i]);
         gzput(player1->state);
-		gzputi(bdamage);
-		bdamage = 0;
-		gzputi(ddamage);
-		if(ddamage)	{ gzputv(dorig); ddamage = 0; };
+        gzputi(bdamage);
+        bdamage = 0;
+        gzputi(ddamage);
+        if(ddamage)	{ gzputv(dorig); ddamage = 0; };
         // FIXME: add all other client state which is not send through the network
     };
 };
@@ -238,29 +238,29 @@ void startdemo()
 
 VAR(demodelaymsec, 0, 120, 500);
 
-void catmulrom(vec &z, vec &a, vec &b, vec &c, float s, vec &dest)		// spline interpolation
+void catmulrom(vec &z, vec &a, vec &b, vec &c, float s, vec &dest)        // spline interpolation
 {
-	vec t1 = b, t2 = c;
+    vec t1 = b, t2 = c;
 
-	vsub(t1, z); vmul(t1, 0.5f)
-	vsub(t2, a); vmul(t2, 0.5f);
+    vsub(t1, z); vmul(t1, 0.5f)
+    vsub(t2, a); vmul(t2, 0.5f);
 
-	float s2 = s*s;
-	float s3 = s*s2;
+    float s2 = s*s;
+    float s3 = s*s2;
 
-	dest = a;
-	vec t = b;
+    dest = a;
+    vec t = b;
 
-	vmul(dest, 2*s3 - 3*s2 + 1);
-	vmul(t,   -2*s3 + 3*s2);     vadd(dest, t);
+    vmul(dest, 2*s3 - 3*s2 + 1);
+    vmul(t,   -2*s3 + 3*s2);     vadd(dest, t);
     vmul(t1,     s3 - 2*s2 + s); vadd(dest, t1);
-	vmul(t2,     s3 -   s2);     vadd(dest, t2);
+    vmul(t2,     s3 -   s2);     vadd(dest, t2);
 };
 
 void fixwrap(dynent *a, dynent *b)
 {
-	while(b->yaw-a->yaw>180)  a->yaw += 360;  
-	while(b->yaw-a->yaw<-180) a->yaw -= 360;
+    while(b->yaw-a->yaw>180)  a->yaw += 360;  
+    while(b->yaw-a->yaw<-180) a->yaw -= 360;
 };
 
 void demoplaybackstep()
@@ -281,7 +281,7 @@ void demoplaybackstep()
         dynent *target = players[democlientnum];
         assert(target); 
         
-		int extras;
+        int extras;
         if(extras = gzget())     // read additional client side state not present in normal network stream
         {
             target->gunselect = gzget();
@@ -294,8 +294,8 @@ void demoplaybackstep()
             loopi(NUMGUNS) target->ammo[i] = gzget();
             target->state = gzget();
             target->lastmove = playbacktime;
-			if(bdamage = gzgeti()) damageblend(bdamage);
-			if(ddamage = gzgeti()) { gzgetv(dorig); particle_splash(3, ddamage, 1000, dorig); };
+            if(bdamage = gzgeti()) damageblend(bdamage);
+            if(ddamage = gzgeti()) { gzgetv(dorig); particle_splash(3, ddamage, 1000, dorig); };
             // FIXME: set more client state here
         };
         
@@ -327,23 +327,23 @@ void demoplaybackstep()
             *player1 = *b;
             if(a!=b)                                // interpolate pos & angles
             {
-				dynent *c = b;
-				if(i+2<playerhistory.length()) c = playerhistory[i+2];
-				dynent *z = a;
-				if(i-1>=0) z = playerhistory[i-1];
-				//if(a==z || b==c) printf("* %d\n", lastmillis);
-				float bf = (itime-a->lastupdate)/(float)(b->lastupdate-a->lastupdate);
-				fixwrap(a, player1);
-				fixwrap(c, player1);
-				fixwrap(z, player1);
-				vdist(dist, v, z->o, c->o);
-				if(dist<16)		// if teleport or spawn, dont't interpolate
-				{
-					catmulrom(z->o, a->o, b->o, c->o, bf, player1->o);
-					catmulrom(*(vec *)&z->yaw, *(vec *)&a->yaw, *(vec *)&b->yaw, *(vec *)&c->yaw, bf, *(vec *)&player1->yaw);
-				};
-				fixplayer1range();
-			};
+                dynent *c = b;
+                if(i+2<playerhistory.length()) c = playerhistory[i+2];
+                dynent *z = a;
+                if(i-1>=0) z = playerhistory[i-1];
+                //if(a==z || b==c) printf("* %d\n", lastmillis);
+                float bf = (itime-a->lastupdate)/(float)(b->lastupdate-a->lastupdate);
+                fixwrap(a, player1);
+                fixwrap(c, player1);
+                fixwrap(z, player1);
+                vdist(dist, v, z->o, c->o);
+                if(dist<16)        // if teleport or spawn, dont't interpolate
+                {
+                    catmulrom(z->o, a->o, b->o, c->o, bf, player1->o);
+                    catmulrom(*(vec *)&z->yaw, *(vec *)&a->yaw, *(vec *)&b->yaw, *(vec *)&c->yaw, bf, *(vec *)&player1->yaw);
+                };
+                fixplayer1range();
+            };
             break;
         };
         //if(player1->state!=CS_DEAD) showscores(false);

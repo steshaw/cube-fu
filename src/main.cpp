@@ -4,7 +4,7 @@
 
 void cleanup(char *msg)         // single program exit point;
 {
-	stop();
+    stop();
     disconnect(true);
     writecfg();
     cleangl();
@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 
     log("localconnect");
     localconnect();
-    changemap("metl3");		// if this map is changed, also change depthcorrect()
+    changemap("metl3");        // if this map is changed, also change depthcorrect()
     
     log("mainloop");
     int ignore = 5;
@@ -193,11 +193,11 @@ int main(int argc, char **argv)
         readdepth(scr_w, scr_h);
         SDL_GL_SwapBuffers();
         extern void updatevol(); updatevol();
-        if(framesinmap++<5)	// cheap hack to get rid of initial sparklies, even when triple buffering etc.
+        if(framesinmap++<5)    // cheap hack to get rid of initial sparklies, even when triple buffering etc.
         {
-			player1->yaw += 5;
-			gl_drawframe(scr_w, scr_h, fps);
-			player1->yaw -= 5;
+            player1->yaw += 5;
+            gl_drawframe(scr_w, scr_h, fps);
+            player1->yaw -= 5;
         };
         gl_drawframe(scr_w, scr_h, fps);
         SDL_Event event;

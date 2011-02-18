@@ -57,7 +57,7 @@ void disconnect_client(int n, char *reason);
 
 void send(int n, ENetPacket *packet)
 {
-	if(!packet) return;
+    if(!packet) return;
     switch(clients[n].type)
     {
         case ST_TCPIP:
@@ -239,7 +239,7 @@ void process(ENetPacket * packet, int sender)   // sender may be -1
         }
 
         case SV_RECVMAP:
-			send(sender, recvmap(sender));
+            send(sender, recvmap(sender));
             return;
             
         case SV_EXT:   // allows for new features that require no server updates 
@@ -365,9 +365,9 @@ void serverslice(int seconds, unsigned int timeout)   // main server update, cal
     
     if(!isdedicated) return;     // below is network only
 
-	int numplayers = 0;
-	loopv(clients) if(clients[i].type!=ST_EMPTY) ++numplayers;
-	serverms(mode, numplayers, minremain, smapname, seconds, clients.length()>=maxclients);
+    int numplayers = 0;
+    loopv(clients) if(clients[i].type!=ST_EMPTY) ++numplayers;
+    serverms(mode, numplayers, minremain, smapname, seconds, clients.length()>=maxclients);
 
     if(seconds-laststatus>60)   // display bandwidth stats, useful for server ops
     {
@@ -442,7 +442,7 @@ void initserver(bool dedicated, int uprate, char *sdesc, char *ip, char *master,
 {
     serverpassword = passwd;
     maxclients = maxcl;
-	servermsinit(master ? master : "wouter.fov120.com/cube/masterserver/", sdesc, dedicated);
+    servermsinit(master ? master : "wouter.fov120.com/cube/masterserver/", sdesc, dedicated);
     
     if(isdedicated = dedicated)
     {

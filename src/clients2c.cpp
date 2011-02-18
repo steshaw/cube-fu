@@ -171,7 +171,7 @@ void localservertoclient(uchar *buf, int len)   // processes any updates from th
         case SV_CDIS:
             cn = getint(p);
             if(!(d = getclient(cn))) break;
-			conoutf("player %s disconnected", d->name[0] ? d->name : "[incompatible client]"); 
+            conoutf("player %s disconnected", d->name[0] ? d->name : "[incompatible client]"); 
             zapdynent(players[cn]);
             break;
 

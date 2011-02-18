@@ -132,61 +132,61 @@ void md2::render(vec &light, int frame, int range, float x, float y, float z, fl
     glRotatef(yaw+180, 0, -1, 0);
     glRotatef(pitch, 0, 0, 1);
     
-	glColor3fv((float *)&light);
+    glColor3fv((float *)&light);
 
     if(displaylist && frame==0 && range==1)
     {
-		glCallList(displaylist);
-		xtraverts += displaylistverts;
+        glCallList(displaylist);
+        xtraverts += displaylistverts;
     }
     else
     {
-		if(frame==0 && range==1)
-		{
-			static int displaylistn = 10;
-			glNewList(displaylist = displaylistn++, GL_COMPILE);
-			displaylistverts = xtraverts;
-		};
-		
-		int time = lastmillis-basetime;
-		int fr1 = (int)(time/speed);
-		float frac1 = (time-fr1*speed)/speed;
-		float frac2 = 1-frac1;
-		fr1 = fr1%range+frame;
-		int fr2 = fr1+1;
-		if(fr2>=frame+range) fr2 = frame;
-		vec *verts1 = mverts[fr1];
-		vec *verts2 = mverts[fr2];
+        if(frame==0 && range==1)
+        {
+            static int displaylistn = 10;
+            glNewList(displaylist = displaylistn++, GL_COMPILE);
+            displaylistverts = xtraverts;
+        };
+        
+        int time = lastmillis-basetime;
+        int fr1 = (int)(time/speed);
+        float frac1 = (time-fr1*speed)/speed;
+        float frac2 = 1-frac1;
+        fr1 = fr1%range+frame;
+        int fr2 = fr1+1;
+        if(fr2>=frame+range) fr2 = frame;
+        vec *verts1 = mverts[fr1];
+        vec *verts2 = mverts[fr2];
 
-		for(int *command = glCommands; (*command)!=0;)
-		{
-			int numVertex = *command++;
-			if(numVertex>0) { glBegin(GL_TRIANGLE_STRIP); }
-			else            { glBegin(GL_TRIANGLE_FAN); numVertex = -numVertex; };
+        for(int *command = glCommands; (*command)!=0;)
+        {
+            int numVertex = *command++;
+            if(numVertex>0) { glBegin(GL_TRIANGLE_STRIP); }
+            else            { glBegin(GL_TRIANGLE_FAN); numVertex = -numVertex; };
 
-			loopi(numVertex)
-			{
-				float tu = *((float*)command++);
-				float tv = *((float*)command++);
-				glTexCoord2f(tu, tv);
-				int vn = *command++;
-				vec &v1 = verts1[vn];
-				vec &v2 = verts2[vn];
-				#define ip(c) v1.c*frac2+v2.c*frac1
-				glVertex3f(ip(x), ip(z), ip(y));
-			};
+            loopi(numVertex)
+            {
+                float tu = *((float*)command++);
+                float tv = *((float*)command++);
+                glTexCoord2f(tu, tv);
+                int vn = *command++;
+                vec &v1 = verts1[vn];
+                vec &v2 = verts2[vn];
+                #define ip(c) v1.c*frac2+v2.c*frac1
+                glVertex3f(ip(x), ip(z), ip(y));
+            };
 
-			xtraverts += numVertex;
+            xtraverts += numVertex;
 
-			glEnd();
-		};
-		
-		if(displaylist)
-		{
-			glEndList();
-			displaylistverts = xtraverts-displaylistverts;
-		};
-	};
+            glEnd();
+        };
+        
+        if(displaylist)
+        {
+            glEndList();
+            displaylistverts = xtraverts-displaylistverts;
+        };
+    };
 
     glPopMatrix();
 }
@@ -226,7 +226,7 @@ md2 *loadmodel(char *name)
 
 void mapmodel(char *rad, char *h, char *zoff, char *snap, char *name)
 {
-	md2 *m = loadmodel(name);
+    md2 *m = loadmodel(name);
     mapmodelinfo mmi = { atoi(rad), atoi(h), atoi(zoff), atoi(snap), m->loadname }; 
     m->mmi = mmi;
     mapmodels.add(m);

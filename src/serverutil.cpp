@@ -83,7 +83,7 @@ ENetPacket *recvmap(int n)
     p += copysize;
     *(ushort *)start = ENET_HOST_TO_NET_16(p-start);
     enet_packet_resize(packet, p-start);
-	return packet;
+    return packet;
 }
 
 

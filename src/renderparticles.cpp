@@ -44,11 +44,11 @@ void setorient(vec &r, vec &u) { right = r; up = u; };
 
 void render_particles(int time)
 {
-	if(demoplayback && demotracking)
-	{
-		vec nom = { 0, 0, 0 };
-		newparticle(player1->o, nom, 100000000, 8);
-	};
+    if(demoplayback && demotracking)
+    {
+        vec nom = { 0, 0, 0 };
+        newparticle(player1->o, nom, 100000000, 8);
+    };
 
     glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
@@ -95,7 +95,7 @@ void render_particles(int time)
         }
         else
         {
-			if(pt->gr) p->o.z -= ((lastmillis-p->millis)/3.0f)*curtime/(pt->gr*10000);
+            if(pt->gr) p->o.z -= ((lastmillis-p->millis)/3.0f)*curtime/(pt->gr*10000);
             vec a = p->d;
             vmul(a,time);
             vdiv(a,20000.0f);

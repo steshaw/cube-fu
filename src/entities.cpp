@@ -6,20 +6,20 @@ vector<entity> ents;
 
 char *entmdlnames[] = 
 {
-	"shells", "bullets", "rockets", "rrounds", "health", "boost",
-	"g_armour", "y_armour", "quad",	"teleporter",     
+    "shells", "bullets", "rockets", "rrounds", "health", "boost",
+    "g_armour", "y_armour", "quad",    "teleporter",     
 };
 
 int triggertime = 0;
 
 void renderent(entity &e, char *mdlname, float z, float yaw, int frame = 0, int numf = 1, int basetime = 0, float speed = 10.0f)
 {
-	rendermodel(mdlname, frame, numf, 0, 1.1f, e.x, z+S(e.x, e.y)->floor, e.y, yaw, 0, false, 1.0f, speed, 0, basetime);
+    rendermodel(mdlname, frame, numf, 0, 1.1f, e.x, z+S(e.x, e.y)->floor, e.y, yaw, 0, false, 1.0f, speed, 0, basetime);
 };
 
 void renderentities()
 {
-	if(lastmillis>triggertime+1000) triggertime = 0;
+    if(lastmillis>triggertime+1000) triggertime = 0;
     loopv(ents)
     {
         entity &e = ents[i];
@@ -27,29 +27,29 @@ void renderentities()
         {
             mapmodelinfo &mmi = getmminfo(e.attr2);
             if(!&mmi) continue;
-			rendermodel(mmi.name, 0, 1, e.attr4, (float)mmi.rad, e.x, (float)S(e.x, e.y)->floor+mmi.zoff+e.attr3, e.y, (float)((e.attr1+7)-(e.attr1+7)%15), 0, false, 1.0f, 10.0f, mmi.snap);
+            rendermodel(mmi.name, 0, 1, e.attr4, (float)mmi.rad, e.x, (float)S(e.x, e.y)->floor+mmi.zoff+e.attr3, e.y, (float)((e.attr1+7)-(e.attr1+7)%15), 0, false, 1.0f, 10.0f, mmi.snap);
         }
         else
         {
             if(OUTBORD(e.x, e.y)) continue;
             if(e.type!=CARROT)
             {
-				if(!e.spawned && e.type!=TELEPORT) continue;
-				if(e.type<I_SHELLS || e.type>TELEPORT) continue;
-				renderent(e, entmdlnames[e.type-I_SHELLS], (float)(1+sin(lastmillis/100.0+e.x+e.y)/20), lastmillis/10.0f);
+                if(!e.spawned && e.type!=TELEPORT) continue;
+                if(e.type<I_SHELLS || e.type>TELEPORT) continue;
+                renderent(e, entmdlnames[e.type-I_SHELLS], (float)(1+sin(lastmillis/100.0+e.x+e.y)/20), lastmillis/10.0f);
             }
-			else switch(e.attr2)
-            {			
-				case 1:
-				case 3:
-					continue;
-					
+            else switch(e.attr2)
+            {            
+                case 1:
+                case 3:
+                    continue;
+                    
                 case 2: 
                 case 0:
-					if(!e.spawned) continue;
-					renderent(e, "carrot", (float)(1+sin(lastmillis/100.0+e.x+e.y)/20), lastmillis/(e.attr2 ? 1.0f : 10.0f));
-					break;
-					
+                    if(!e.spawned) continue;
+                    renderent(e, "carrot", (float)(1+sin(lastmillis/100.0+e.x+e.y)/20), lastmillis/(e.attr2 ? 1.0f : 10.0f));
+                    break;
+                    
                 case 4: renderent(e, "switch2", 3,      (float)e.attr3*90, (!e.spawned && !triggertime) ? 1  : 0, (e.spawned || !triggertime) ? 1 : 2,  triggertime, 1050.0f);  break;
                 case 5: renderent(e, "switch1", -0.15f, (float)e.attr3*90, (!e.spawned && !triggertime) ? 30 : 0, (e.spawned || !triggertime) ? 1 : 30, triggertime, 35.0f); break;
             }; 
@@ -197,7 +197,7 @@ void pickup(int n, dynent *d)
             lastjumppad = lastmillis;
             vec v = { (int)(char)ents[n].attr3/10.0f, (int)(char)ents[n].attr2/10.0f, ents[n].attr1/10.0f };
             player1->vel.z = 0;
-			vadd(player1->vel, v);
+            vadd(player1->vel, v);
             playsoundc(S_JUMPPAD);
             break;
         };

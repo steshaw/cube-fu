@@ -60,7 +60,7 @@ void initsound()
             conoutf("sound init failed (SDL_mixer): %s", (size_t)Mix_GetError());
             nosound = true;
         };
-	    Mix_AllocateChannels(MAXCHAN);	
+        Mix_AllocateChannels(MAXCHAN);
     #else
         if(FSOUND_GetVersion()<FMOD_VERSION) fatal("old FMOD dll");
         if(!FSOUND_Init(SOUNDFREQ, MAXCHAN, FSOUND_INIT_GLOBALFOCUS))

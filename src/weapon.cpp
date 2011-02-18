@@ -94,7 +94,7 @@ bool intersect(dynent *d, vec &from, vec &to)   // if lineseg hits entity boundi
 
 char *playerincrosshair()
 {
-	if(demoplayback) return NULL;
+    if(demoplayback) return NULL;
     loopv(players)
     {
         dynent *o = players[i];
@@ -133,7 +133,7 @@ void hit(int target, int damage, dynent *d, dynent *at)
     else if(d->monsterstate) monsterpain(d, damage, at);
     else { addmsg(1, 4, SV_DAMAGE, target, damage, d->lifesequence); playsound(S_PAIN1+rnd(5), &d->o); };
     particle_splash(3, damage, 1000, d->o);
-	demodamage(damage, d->o);
+    demodamage(damage, d->o);
 };
 
 const float RL_RADIUS = 5;

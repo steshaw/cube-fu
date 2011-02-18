@@ -314,11 +314,11 @@ void monsterthink()
         vec v = { e.x, e.y, S(e.x, e.y)->floor };
         loopv(monsters) if(monsters[i]->state==CS_DEAD)
         {
-			if(lastmillis-monsters[i]->lastaction<2000)
-			{
-				monsters[i]->move = 0;
-				moveplayer(monsters[i], 1, false);
-			};
+            if(lastmillis-monsters[i]->lastaction<2000)
+            {
+                monsters[i]->move = 0;
+                moveplayer(monsters[i], 1, false);
+            };
         }
         else
         {
