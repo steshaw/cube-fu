@@ -1,4 +1,3 @@
-cube
-config.cfg
-data
-packages
+/config.cfg
+/data
+/packages

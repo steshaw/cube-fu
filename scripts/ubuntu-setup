@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+packages=(
+  libgl1
+  libsdl-image1.2-dev
+  libsdl-mixer1.2-dev
+  libsdl1.2-dev
+)
+
+sudo apt -y install "${packages[@]}"

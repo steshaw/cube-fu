@@ -3,7 +3,9 @@ CXX=g++ -fpermissive   # XXX: Remove
 CXXOPTFLAGS=-Wall -O3 -fsigned-char -fomit-frame-pointer
 CXXFLAGS=$(CXXOPTFLAGS) -I../enet/include `sdl-config --cflags`
 
-CLIENT_LIBS=-L../enet -lenet `sdl-config --libs` -framework OpenGL -lz -L/Developer/SDKs/MacOSX10.5.sdk/usr/X11/lib/ -lX11 #-lSDL_image -lSDL_mixer -lz -lGL -lGLU 
+# XXX: Looks like we had a quick hack for macOS here.
+#CLIENT_LIBS=-L../enet -lenet `sdl-config --libs` -framework OpenGL -lz -L/Developer/SDKs/MacOSX10.5.sdk/usr/X11/lib/ -lX11 #-lSDL_image -lSDL_mixer -lz -lGL -lGLU
+CLIENT_LIBS=-L../enet -lenet  `sdl-config --libs`  -lSDL_image -lSDL_mixer -lz -lGL -lGLU -lX11
 CLIENT_OBJS= \
 	client.o \
 	clientextras.o \

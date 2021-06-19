@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Put the local sdl-config script into the PATH.
+# A quick hack for building on macOS.
+if [[ $(uname) == 'Darwin' ]]; then
+  PATH=scripts/mac:${PATH}
+fi
+
+make -C src
