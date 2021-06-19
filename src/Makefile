@@ -52,7 +52,7 @@ default: all
 all: enet client server
 
 enet:
-	-make -C ../enet all
+	make -C ../enet all
 
 clean:
 	-rm -f $(SERVER_OBJS) $(CLIENT_OBJS) cube_server cube_client
